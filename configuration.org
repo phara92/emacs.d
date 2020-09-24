@@ -50,19 +50,12 @@ down in this file, some are used with the default configuration.
 
 #+BEGIN_SRC emacs-lisp
 
-  (defvar my-packages '(ac-cider
-                        ac-js2
-                        ag
-                        atomic-chrome
+  (defvar my-packages '(ag
+                        ;;atomic-chrome
                         auto-complete
                         beacon
                         bicycle
                         browse-kill-ring
-                        cider
-                        clj-refactor
-                        clojure-mode
-                        coffee-mode
-                        counsel-jq
                         comment-tags
                         darktooth-theme
                         dired-narrow
@@ -72,7 +65,6 @@ down in this file, some are used with the default configuration.
                         editorconfig
                         elfeed
                         elfeed-goodies
-                        enh-ruby-mode
                         erc-image
                         evil
                         evil-escape
@@ -85,13 +77,8 @@ down in this file, some are used with the default configuration.
                         flycheck
                         hide-mode-line
                         impatient-mode
-                        ini-mode
                         ivy counsel swiper
-                        json-mode
-                        js2-mode
-                        js2-refactor
-                        js-comint
-                        ledger-mode
+                        ;; commandline accounting ledger-mode
                         magit
                         markdown-mode
                         package-lint
@@ -99,10 +86,6 @@ down in this file, some are used with the default configuration.
                         pdf-tools
                         projectile
                         rainbow-mode
-                        rjsx-mode
-                        ob-restclient
-                        restclient
-                        robe
                         sass-mode
                         spacemacs-theme
                         spaceline
@@ -110,7 +93,6 @@ down in this file, some are used with the default configuration.
                         synosaurus
                         tide
                         visual-fill-column
-                        web-mode
                         which-key
                         writegood-mode
                         writeroom-mode
@@ -1316,109 +1298,6 @@ themselves). Instead, it uses common Elisp.
 
 When you want to reload the =system=, use =C-c r=. It will save your
 current buffer and reload the =system=.
-
-** JavaScript
-
-*** =tide-mode=
-
-https://github.com/ananthakumaran/tide
-
-Claim: TypeScript Interactive Development Environment for Emacs.
-However, also JavaScript development gets big improvements with
-=tide-mode=.
-
-Tide is an alternative to [[http://ternjs.net/][Tern]] which also has great Emacs integration
-and which I have happily been using for years. However, tide works
-even better (in my experience).
-
-For completion to work in a Node.js project, a =jsconfig.json= file
-like this is required:
-
-#+BEGIN_SRC json
-{
-    "compilerOptions": {
-        "target": "es6"
-    },
-    "exclude": [
-        "node_modules"
-    ]
-}
-#+END_SRC
-
-If no project file is found, it’ll fall back to an inferred
-configuration.
-
-Tide default shortcuts:
-
-- =M-.= Jump to the definition of the thing under the cursor.
-- =M-,= Brings you back to last place you were when you pressed M-..
-
-**** Custom shortcuts
-
-#+BEGIN_SRC emacs-lisp
-  (require 'rjsx-mode)
-  (define-key rjsx-mode-map (kbd "C-c C-r") 'tide-rename-symbol)
-  (define-key rjsx-mode-map (kbd "C-c C-d") 'tide-documentation-at-point)
-#+END_SRC
-
-**** Setup
-
-#+BEGIN_SRC emacs-lisp
-  (defun setup-tide-mode ()
-    (interactive)
-    ;; For bigger JS projects and intense tasks like =tide=references=
-    ;; the default of 2s will time out
-    (setq tide-sync-request-timeout 10)
-    (tide-setup)
-    ;; Increase sync request timeout for bigger projects
-    (flycheck-mode +1)
-    (setq flycheck-check-syntax-automatically '(save mode-enabled))
-    (eldoc-mode +1)
-    (tide-hl-identifier-mode +1))
-
-  (add-hook 'rjsx-mode-hook #'setup-tide-mode)
-#+END_SRC
-
-*** =js-comint=
-https://github.com/redguardtoo/js-comint
-
-Run a JavaScript interpreter in an inferior process window.
-**** Enable
-#+BEGIN_SRC emacs-lisp
-(require 'js-comint)
-#+END_SRC
-**** Configure
-#+BEGIN_SRC emacs-lisp
-(add-hook 'rjsx-mode-hook
-          (lambda ()
-            (local-set-key (kbd "C-x C-e") 'js-send-last-sexp)
-            (local-set-key (kbd "C-M-x") 'js-send-last-sexp-and-go)
-            (local-set-key (kbd "C-c b") 'js-send-buffer)
-            (local-set-key (kbd "C-c C-b") 'js-send-buffer-and-go)
-            (local-set-key (kbd "C-c l") 'js-load-file-and-go)))
-#+END_SRC
-*** =rjsx-mode=
-
-https://github.com/felipeochoa/rjsx-mode
-
-This mode derives from js2-mode, extending its parser to support JSX
-syntax according to the official spec. This means you get all of the
-js2 features plus proper syntax checking and highlighting of JSX code
-blocks.
-
-#+BEGIN_SRC emacs-lisp
-(add-to-list 'auto-mode-alist '("components\\/.*\\.js\\'" . rjsx-mode))
-#+END_SRC
-*** General JavaScript configuration
-
-#+BEGIN_SRC emacs-lisp
-  (add-to-list 'auto-mode-alist '("\\.js\\'" . rjsx-mode))
-  (add-hook 'js-mode-hook 'js2-minor-mode)
-  (setq js2-highlight-level 3)
-  (setq js-indent-level 2)
-  ;; Semicolons are optional in JS, do not warn about them missing
-  (setq js2-strict-missing-semi-warning nil)
-#+END_SRC
 
 ** Web
 *** rainbow-mode

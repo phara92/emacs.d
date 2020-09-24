@@ -83,7 +83,6 @@ down in this file, some are used with the default configuration.
                         exec-path-from-shell
                         forge
                         flycheck
-                        flycheck-flow
                         hide-mode-line
                         impatient-mode
                         ini-mode
@@ -1398,44 +1397,6 @@ Run a JavaScript interpreter in an inferior process window.
             (local-set-key (kbd "C-c C-b") 'js-send-buffer-and-go)
             (local-set-key (kbd "C-c l") 'js-load-file-and-go)))
 #+END_SRC
-*** =flow=
-https://github.com/flowtype/flow-for-emacs/
-
-An emacs plugin for Flow, a static typechecker for JavaScript.
-
-- Shows errors found by typechecking JavaScript code with Flow.
-- Provides a bunch of common IDE features powered by Flow to aid reading and writing JavaScript code.
-#+BEGIN_SRC elisp
-(load-file "~/.emacs.d/flow-for-emacs/flow.el")
-#+END_SRC
-
-*** =flycheck-flow=
-
-[[https://flow.org/][Flow]] is a static type checker for JavaScript.
-
-**** Type Inference
-
-Flow uses type inference to find bugs even without type annotations.
-It precisely tracks the types of variables as they flow through your
-program.
-
-**** Idiomatic JS
-
-Flow is designed for JavaScript programmers. It understands common
-JavaScript idioms and very dynamic code.
-
-**** Realtime Feedback
-
-Flow incrementally rechecks your changes as you work, preserving the
-fast feedback cycle of developing plain JavaScript.
-
-**** Configuration
-
-#+BEGIN_SRC elisp
-(require 'flycheck-flow)
-(add-hook 'javascript-mode-hook 'flycheck-mode)
-#+END_SRC
-
 *** =rjsx-mode=
 
 https://github.com/felipeochoa/rjsx-mode

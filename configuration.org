@@ -2892,12 +2892,6 @@ mu init --my-address=alain.lafon@dispatched.ch --my-address=alain@200ok.ch --my-
    ;; (add-hook 'mu4e-view-mode-hook 'epa-mail-mode)
 #+END_SRC
 
- Automatic line breaks when reading mail
-
- #+BEGIN_SRC emacs-lisp
- (add-hook 'mu4e-view-mode-hook 'visual-line-mode)
- #+END_SRC
-
  Do not reply to self
 
  #+BEGIN_SRC emacs-lisp
